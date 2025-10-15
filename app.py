@@ -33,11 +33,11 @@ def load_model(model_path="model/mobilenet_v3_large_best.pth", num_classes=2):
             # Check if it's a checkpoint with 'model_state_dict'
             if 'model_state_dict' in checkpoint:
                 model.load_state_dict(checkpoint['model_state_dict'])
-                st.info("Loaded model_state_dict from checkpoint.")
+              #  st.info("Loaded model_state_dict from checkpoint.")
             else:
                 # Assume dict is state_dict
                 model.load_state_dict(checkpoint)
-                st.info("Loaded state_dict from .pth file.")
+              #  st.info("Loaded state_dict from .pth file.")
         else:
             raise ValueError("Unknown .pth file format!")
 
