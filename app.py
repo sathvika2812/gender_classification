@@ -2,9 +2,10 @@ import streamlit as st
 import torch
 from torchvision import models, transforms
 from PIL import Image
-import numpy as np
 
+# ---------------------------
 # Load model
+# ---------------------------
 @st.cache_resource
 def load_model():
     model = models.mobilenet_v3_large(pretrained=False)
@@ -16,7 +17,9 @@ def load_model():
 
 model = load_model()
 
+# ---------------------------
 # Preprocessing
+# ---------------------------
 def preprocess_image(image):
     transform = transforms.Compose([
         transforms.Resize((224,224)),
@@ -26,7 +29,9 @@ def preprocess_image(image):
     ])
     return transform(image).unsqueeze(0)
 
+# ---------------------------
 # Prediction
+# ---------------------------
 def predict(image):
     tensor = preprocess_image(image)
     with torch.no_grad():
@@ -34,8 +39,11 @@ def predict(image):
         _, pred = torch.max(outputs, 1)
     return "Male" if pred.item() == 0 else "Female"
 
+# ---------------------------
 # Streamlit UI
-st.title("Gender Classification")
+# ---------------------------
+st.title("Gender Classification (MobileNetV3)")
+
 uploaded_file = st.file_uploader("Choose an image", type=["jpg","png","jpeg"])
 
 if uploaded_file:
